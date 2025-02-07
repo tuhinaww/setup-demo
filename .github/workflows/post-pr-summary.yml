@@ -3,9 +3,7 @@ name: Summarize PR Diff
 on:
   pull_request:
     branches:
-      - main
       - staging
-      - production
     types: [opened, synchronize]
 
 permissions:
