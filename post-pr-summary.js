@@ -12,6 +12,8 @@ const githubApi = axios.create({
   },
 });
 
+console.log("should not work for main and production branch");
+
 const ALLOWED_BRANCHES = ['staging', 'main'];
 
 const postComment = async (owner, repo, pullNumber, file, summary) => {
