@@ -1,0 +1,34 @@
+name: Summarize PR Diff
+
+on:
+  pull_request:
+    branches:
+      - main
+      - staging
+      - production
+    types: [opened, synchronize]
+
+permissions:
+  pull-requests: write
+
+jobs:
+  summarize:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'  
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run Summarize PR Diff Script
+        env:
+          GITHUB_TOKEN: ${{ secrets.MY_GITHUB_TOKEN }}  
+          COHERE_API_KEY: ${{ secrets.COHERE_API_KEY }} 
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+        run: node post-pr-summary.js
